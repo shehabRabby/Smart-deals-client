@@ -7,6 +7,9 @@ import RootLayouts from "./layouts/RootLayouts";
 import Home from "./components/Home/Home";
 import AllProducts from "./components/AllProducts/AllProducts";
 import AuthProvider from "./contexts/AuthProvider";
+import Register from "./components/Register/Register";
+import MyProducts from "./components/My Products/MyProducts";
+import MyBids from "./components/MyBids/MyBids";
 
 const router = createBrowserRouter([
   {
@@ -18,20 +21,29 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
-        path:'/allProducts',
-        Component: AllProducts
+        path: "allProducts",
+        Component: AllProducts,
       },
       {
-
-      }
+        path: "register",
+        Component: Register,
+      },
+      {
+        path: "myProducts",
+        element: <MyProducts></MyProducts>,
+      },
+      {
+        path: "myBids",
+        element: <MyBids></MyBids>,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-   <AuthProvider>
-     <RouterProvider router={router} />
-   </AuthProvider>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );
