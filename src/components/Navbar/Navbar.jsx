@@ -26,9 +26,7 @@ const Navbar = () => {
   );
 
   const handleSignOut = () => {
-    signOutUser()
-    .then()
-    .catch();
+    signOutUser().then().catch();
   };
 
   return (
@@ -60,7 +58,7 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">
+          <a className="btn btn-ghost text-xl font-extrabold">
             Smart <span className="text-purple-700">Deals</span>
           </a>
         </div>
@@ -69,7 +67,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           {user ? (
-            <a onClick={handleSignOut} className="btn">
+            <a onClick={handleSignOut} className="btn btn-primary">
               Sign Out
             </a>
           ) : (
