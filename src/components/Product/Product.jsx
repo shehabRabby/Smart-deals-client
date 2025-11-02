@@ -2,14 +2,14 @@ import React, { use } from "react";
 import { Link } from "react-router";
 
 const Product = ({ product }) => {
-  const {_id,title, price_min, price_max } = product;
+  const {_id,title, price_min, price_max,image } = product;
   return (
     <div className="card bg-base-100 shadow-sm">
       <figure className="px-4 pt-4">
         <img
-          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+          src={image}
           alt="Shoes"
-          className="rounded-xl"
+          className="rounded-xl h-56"
         />
       </figure>
       <div className="card-body">
