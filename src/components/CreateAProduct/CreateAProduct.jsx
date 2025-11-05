@@ -4,9 +4,12 @@ import { FaChevronCircleLeft } from "react-icons/fa";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import useAxios from "../../hooks/useAxios";
 
 const CreateAProduct = () => {
   const { user } = useAuth(); //custom hook
+  const axiosInstance = useAxios();
+
   const handleCreateAProduct = (e) => {
     e.preventDefault();
     const title = e.target.title.value;
@@ -27,7 +30,21 @@ const CreateAProduct = () => {
       email: user.email,
     };
 
-    axios.post("http://localhost:3000/products", newProduct).then((data) => {
+    // axios.post("http://localhost:3000/products", newProduct).then((data) => {
+    //   if (data.data.insertedId) {
+    //     Swal.fire({
+    //       position: "center",
+    //       icon: "success",
+    //       title: "Your Product has been Created",
+    //       showConfirmButton: false,
+    //       timer: 1800,
+    //     });
+    //   }
+    // });
+
+    // axios instance here 
+    
+    axiosInstance.post("/products", newProduct).then((data) => {
       if (data.data.insertedId) {
         Swal.fire({
           position: "center",
