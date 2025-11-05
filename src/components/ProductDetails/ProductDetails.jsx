@@ -2,6 +2,7 @@ import React, { use, useEffect, useRef, useState } from "react";
 import { useLoaderData } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const ProductDetails = () => {
   const { _id: productId } = useLoaderData();
@@ -10,13 +11,21 @@ const ProductDetails = () => {
   const { user } = use(AuthContext);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/bids/${productId}`)
-      .then((res) => res.json())
+    axios
+      .get(`http://localhost:3000/products/bids/${productId}`)
       .then((data) => {
-        console.log("Bids for this ", data);
-        setBids(data);
+        setBids(data.data);
       });
   }, [productId]);
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:3000/products/bids/${productId}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log("Bids for this ", data);
+  //       setBids(data);
+  //     });
+  // }, [productId]);
 
   const handleBidModalOpen = () => {
     bidModalRef.current.showModal();
@@ -57,8 +66,8 @@ const ProductDetails = () => {
           });
           //add new bid to state
           newBid._id = data.insertedId;
-          const newBids = [...bids, newBid]
-          newBids.sort((a,b) => b.bid_price - a.bid_price)
+          const newBids = [...bids, newBid];
+          newBids.sort((a, b) => b.bid_price - a.bid_price);
           setBids(newBids);
         }
       });
@@ -160,46 +169,42 @@ const ProductDetails = () => {
             </thead>
             <tbody>
               {/* row 1 */}
-             {
-              bids.map((bid,index)=>
-                <tr>
-                <th>{index+1}</th>
+              {bids.map((bid, index) => (
+                <tr key={bid._id}>
+                  <th>{index + 1}</th>
 
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img
-                          src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                          alt="Avatar Tailwind CSS Component"
-                        />
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-12 w-12">
+                          <img
+                            src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                            alt="Avatar Tailwind CSS Component"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-bold">{bid.buyer_name}</div>
+                        <div className="text-sm opacity-50">United States</div>
                       </div>
                     </div>
-                    <div>
-                      <div className="font-bold">{bid.buyer_name}</div>
-                      <div className="text-sm opacity-50">United States</div>
-                    </div>
-                  </div>
-                </td>
+                  </td>
 
-                <td>
-                  {bid.buyer_email}
-                  <br />
-                  <span className="badge badge-ghost badge-sm">
-                    By Smart Details
-                  </span>
-                </td>
+                  <td>
+                    {bid.buyer_email}
+                    <br />
+                    <span className="badge badge-ghost badge-sm">
+                      By Smart Details
+                    </span>
+                  </td>
 
-                <td>
-                  {bid.bid_price}
-                </td>
+                  <td>{bid.bid_price}</td>
 
-                <th>
-                  <button className="btn btn-ghost btn-xs">details</button>
-                </th>
-              </tr>
-              )
-             }
+                  <th>
+                    <button className="btn btn-ghost btn-xs">details</button>
+                  </th>
+                </tr>
+              ))}
               {/* row 1 */}
             </tbody>
           </table>
