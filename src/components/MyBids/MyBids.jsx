@@ -4,49 +4,52 @@ import Swal from "sweetalert2";
 
 const MyBids = () => {
   const { user } = use(AuthContext);
+  console.log(user);
   const [bids, setBids] = useState([]);
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:3000/bids?${user.email}`)
+      fetch(`http://localhost:3000/bids?${user.email}`, {
+        headers: {
+          authorization: `Bearer ${user.accessToken}`,
+        },
+      })
         .then((res) => res.json())
         .then((data) => {
           setBids(data);
         });
     }
-  }, [user?.email]);
+  }, [user]);
 
-  
-    const handleDeleteBid = (_id) => {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          fetch(`http://localhost:3000/bids/${_id}`, {
-            method: "DELETE",
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.deletedCount) {
-                Swal.fire({
-                  title: "Deleted!",
-                  text: "Your bid has been deleted.",
-                  icon: "success",
-                });
-                const remainingBids = bids.filter((bid) => bid._id != _id);
-                setBids(remainingBids);
-              }
-            });
-        }
-      });
-    };
-
+  const handleDeleteBid = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/bids/${_id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your bid has been deleted.",
+                icon: "success",
+              });
+              const remainingBids = bids.filter((bid) => bid._id != _id);
+              setBids(remainingBids);
+            }
+          });
+      }
+    });
+  };
 
   return (
     <div className="w-7xl mx-auto">
@@ -90,9 +93,7 @@ const MyBids = () => {
                   </div>
                 </td>
 
-                <td>
-                  {bid.buyer_email}
-                </td>
+                <td>{bid.buyer_email}</td>
 
                 <td>{bid.bid_price}</td>
 

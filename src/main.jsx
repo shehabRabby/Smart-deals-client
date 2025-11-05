@@ -11,6 +11,7 @@ import Register from "./components/Register/Register";
 import MyProducts from "./components/My Products/MyProducts";
 import MyBids from "./components/MyBids/MyBids";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
+import PrivateRoute from "./contexts/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,11 @@ const router = createBrowserRouter([
       },
       {
         path: "myBids",
-        element: <MyBids></MyBids>,
+        element: (
+          <PrivateRoute>
+            <MyBids></MyBids>
+          </PrivateRoute>
+        ),
       },
       {
         path: "productDetails/:id",
