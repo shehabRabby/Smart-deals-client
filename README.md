@@ -2,7 +2,7 @@
 
 **A Local Online Marketplace for Buying & Selling with Bids**
 
----
+
 
 ## Overview
 
