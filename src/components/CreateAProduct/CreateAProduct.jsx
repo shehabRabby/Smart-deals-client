@@ -1,14 +1,14 @@
-import axios from "axios";
 import React from "react";
 import { FaChevronCircleLeft } from "react-icons/fa";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
-import useAxios from "../../hooks/useAxios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const CreateAProduct = () => {
   const { user } = useAuth(); //custom hook
-  const axiosInstance = useAxios();
+  // const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const handleCreateAProduct = (e) => {
     e.preventDefault();
@@ -42,9 +42,9 @@ const CreateAProduct = () => {
     //   }
     // });
 
-    // axios instance here 
-    
-    axiosInstance.post("/products", newProduct).then((data) => {
+    // axios instance here
+
+    axiosSecure.post("/products", newProduct).then((data) => {
       if (data.data.insertedId) {
         Swal.fire({
           position: "center",

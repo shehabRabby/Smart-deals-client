@@ -1,11 +1,18 @@
 import axios from "axios";
+import useAuth from "./useAuth";
 
 const instance = axios.create({
   baseURL: "http://localhost:3000",
 });
 
 const useAxiosSecure = () => {
-    // set token in the header for all the api call using axiosSecure hook 
+  const {user} = useAuth();
+  // set token in the header for all the api call using axiosSecure hook means request interceptor
+  instance.interceptors.request.use((config) => {
+    console.log(config);
+    config.headers.authorization = `Bearer ${user.accessToken}`
+    return config;
+  });
   return instance;
 };
 
