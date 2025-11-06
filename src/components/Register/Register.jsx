@@ -7,7 +7,7 @@ const Register = () => {
   const handleGoogleSignin = () => {
     signInWIthGoogle()
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         const newUser = {
           name: result.user.displayName,
           email: result.user.email,
@@ -23,7 +23,7 @@ const Register = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log("Data After user save  ", data);
+            // console.log("Data After user save  ", data);
           });
       })
       .catch((error) => {
